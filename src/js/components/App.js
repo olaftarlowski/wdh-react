@@ -28,7 +28,7 @@ class App extends Component {
       this.updateState({ searching: false });
     }
 
-    let regExp = new RegExp(searchInput, 'i');
+    let regExp = new RegExp(searchInput);
     let results = [];
 
     this.state.data.forEach(location => {

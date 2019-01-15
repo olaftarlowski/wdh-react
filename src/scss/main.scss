@@ -3,6 +3,8 @@
 @import "./components/LocationListContainer.scss";
 @import "./components/Search.scss";
 
+$font-color: white;
+$headline-color: black;
 body {
   margin: 0;
   padding: 0;
@@ -11,10 +13,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: $font-color;
 }
 
 h1 {
   font-size: 16pt;
+  color: $headline-color;
 }
 
 p {

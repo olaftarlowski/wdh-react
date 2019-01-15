@@ -64,11 +64,9 @@ class LocationListContainer extends Component {
       <div className="wrapper">
         <button
           onClick={this.onPageDecrement.bind(this)}
-          disabled={this.state.page === 0 || pageCount === 1}
         >Previous</button>
         <button
           onClick={this.onPageIncrement.bind(this)}
-          disabled={this.state.page === pageCount || pageCount === 1}
         >Next</button>
       </div>
 
