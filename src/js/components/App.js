@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { debounce } from 'lodash';
-import Search from './Search';
-import LocationListContainer from './LocationListContainer';
-import data from '../../data.json';
+import React, { Component } from "react";
+import { debounce } from "lodash";
+import { Search, LocationListContainer, ListElement } from "./";
+import data from "../../data.json";
 
 class App extends Component {
   constructor() {
@@ -11,7 +10,8 @@ class App extends Component {
     this.state = {
       data: data.Clinics,
       searching: false,
-      searchResults: []
+      searchResults: [],
+      choosenResult: null,
     };
 
     this.onSearch = debounce(this.onSearch.bind(this), 1000);
@@ -28,11 +28,12 @@ class App extends Component {
       this.updateState({ searching: false });
     }
 
-    let regExp = new RegExp(searchInput);
+    let regExp = new RegExp(searchInput.toLowerCase());
     let results = [];
 
-    this.state.data.forEach(location => {
-      if (location.Name.match(regExp)) {
+    this.state.data.forEach((location) => {
+      // console.log(location);
+      if (location.Name.toLowerCase().match(regExp)) {
         results.push(location);
       }
     });
@@ -40,18 +41,30 @@ class App extends Component {
     this.updateState({ searchResults: results });
   }
 
+  getElementId(id) {
+    let newElement = this.state.data.filter((el) => {
+      return el.Id === id;
+    })[0];
+    this.updateState({ choosenResult: newElement });
+  }
+
+  check() {
+    console.log(this.state.choosenResult);
+  }
+
   render() {
     return (
       <div id="app">
+        <button onClick={this.check.bind(this)}>CHECK</button>
         <h1>WDH React</h1>
-        <Search
-          onSearch={this.onSearch}
-        />
+        <Search onSearch={this.onSearch} />
         <LocationListContainer
           data={this.state.data}
           searching={this.state.searching}
           searchResults={this.state.searchResults}
+          getElementId={this.getElementId.bind(this)}
         />
+        <ListElement choosenResult={this.state.choosenResult}/>
       </div>
     );
   }

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Search extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   onSearch(e) {
     this.props.onSearch(e.target.value);
@@ -14,7 +14,7 @@ class Search extends Component {
       <div id="search">
         <input type="text" onChange={this.onSearch.bind(this)} />
       </div>
-    )
+    );
   }
 }
 

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import LocationList from './LocationList';
+import React, { Component } from "react";
+import { LocationList } from "./";
 
 class LocationListContainer extends Component {
   constructor(props) {
@@ -10,12 +10,12 @@ class LocationListContainer extends Component {
       pageCount: 0,
       limit: 6,
       skip: 0,
-      searching: false
+      searching: false,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.searching != this.state.searching) {
+    if (nextProps.searching !== this.state.searching) {
       this.updateState({ searching: nextProps.searching, page: 0, skip: 0 });
     }
   }
@@ -25,10 +25,12 @@ class LocationListContainer extends Component {
   }
 
   getLocationList() {
-    let locationList =
+    let locationList = (
       <LocationList
         data={this.getLocationListData()}
+        getElementId={this.props.getElementId}
       />
+    );
 
     return locationList;
   }
@@ -58,17 +60,16 @@ class LocationListContainer extends Component {
   }
 
   getNavigation() {
-    let pageCount = this.getPageCount();
+    // let pageCount = this.getPageCount();
 
-    let navigation =
+    let navigation = (
       <div className="wrapper">
-        <button
-          onClick={this.onPageDecrement.bind(this)}
-        >Previous</button>
-        <button
-          onClick={this.onPageIncrement.bind(this)}
-        >Next</button>
+        {this.state.page === 0 ? null : (
+          <button onClick={this.onPageDecrement.bind(this)}>Previous</button>
+        )}
+        <button onClick={this.onPageIncrement.bind(this)}>Next</button>
       </div>
+    );
 
     return navigation;
   }
@@ -96,16 +97,16 @@ class LocationListContainer extends Component {
   render() {
     return (
       <div id="location-list-container">
-        <div className="list-items">
-          {this.getLocationList()}
-        </div>
+        <div className="list-items">{this.getLocationList()}</div>
 
         <div className="navigation">
           {this.getNavigation()}
-          <p> Showing page {this.state.page + 1} of {this.getPageCount()} </p>
+          <p>
+            Showing page {this.state.page + 1} of {this.getPageCount()}
+          </p>
         </div>
       </div>
-    )
+    );
   }
 }
 
