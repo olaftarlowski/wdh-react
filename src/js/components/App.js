@@ -12,6 +12,7 @@ class App extends Component {
       searching: false,
       searchResults: [],
       choosenResult: null,
+      resultProperties: [],
     };
 
     this.onSearch = debounce(this.onSearch.bind(this), 1000);
@@ -25,16 +26,25 @@ class App extends Component {
     if (searchInput.length > 0) {
       this.updateState({ searching: true });
     } else {
+      this.updateState({ searchResults: this.state.data });
       this.updateState({ searching: false });
+      return;
     }
 
     let regExp = new RegExp(searchInput.toLowerCase());
     let results = [];
 
     this.state.data.forEach((location) => {
-      // console.log(location);
-      if (location.Name.toLowerCase().match(regExp)) {
-        results.push(location);
+      for (const prop in location) {
+        if (
+          location[prop]
+            .toString()
+            .toLowerCase()
+            .match(regExp) &&
+          results.indexOf(location) === -1
+        ) {
+          results.push(location);
+        }
       }
     });
 
@@ -48,14 +58,9 @@ class App extends Component {
     this.updateState({ choosenResult: newElement });
   }
 
-  check() {
-    console.log(this.state.choosenResult);
-  }
-
   render() {
     return (
       <div id="app">
-        <button onClick={this.check.bind(this)}>CHECK</button>
         <h1>WDH React</h1>
         <Search onSearch={this.onSearch} />
         <LocationListContainer
@@ -64,7 +69,7 @@ class App extends Component {
           searchResults={this.state.searchResults}
           getElementId={this.getElementId.bind(this)}
         />
-        <ListElement choosenResult={this.state.choosenResult}/>
+        <ListElement choosenResult={this.state.choosenResult} />
       </div>
     );
   }

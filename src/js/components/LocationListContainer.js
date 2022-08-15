@@ -85,6 +85,9 @@ class LocationListContainer extends Component {
   }
 
   onPageIncrement() {
+    if (this.state.page + 1 === this.getPageCount()) {
+      return;
+    }
     if (this.state.page < this.getPageCount()) {
       let page = this.state.page + 1;
       let skip = this.state.skip;
