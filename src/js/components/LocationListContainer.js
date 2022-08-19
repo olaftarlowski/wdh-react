@@ -64,9 +64,13 @@ class LocationListContainer extends Component {
 
     let navigation = (
       <div className="wrapper">
-        {this.state.page === 0 ? null : (
-          <button onClick={this.onPageDecrement.bind(this)}>Previous</button>
-        )}
+        <button
+          disabled={this.state.page === 0 ? true : false}
+          onClick={this.onPageDecrement.bind(this)}
+        >
+          Previous
+        </button>
+
         <button onClick={this.onPageIncrement.bind(this)}>Next</button>
       </div>
     );
